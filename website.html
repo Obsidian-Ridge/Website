@@ -31,21 +31,18 @@
     }
 
     .typed-text {
-      border-right: 2px solid white;
       white-space: nowrap;
       overflow: hidden;
       font-size: 36px;
-      width: 0;
-      animation: typing 2s steps(20, end) forwards, blink 0.8s step-end infinite;
+      border-right: 2px solid white;
     }
 
-    @keyframes typing {
-      from { width: 0; }
-      to { width: 14ch; } /* Number of characters in "Obsidian Ridge" */
-    }
-
+    /* caret blink */
     @keyframes blink {
       50% { border-color: transparent; }
+    }
+    .typed-text {
+      animation: blink 0.8s step-end infinite;
     }
 
     .page {
@@ -72,7 +69,7 @@
   </div>
 
   <div id="about" class="page">
-    <p>Obsidian Ridge is a minimalist crypto hedge fund focused on intelligent algorithmic strategies and cutting-edge blockchain technologies.</p>
+    <p>Obsidian Ridge is a proprietary trading firm with a goal of making the decentralized finance ecosystem more efficient.</p>
   </div>
 
   <div id="contact" class="page">
@@ -84,6 +81,26 @@
       document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
       document.getElementById(id).classList.add('active');
     }
+
+    // ------ Typewriter with 1s pause on spaces ------
+    document.addEventListener('DOMContentLoaded', () => {
+      const el = document.querySelector('.typed-text');
+      const fullText = el.textContent;
+      el.textContent = '';
+      const typingSpeed = 60;      // ms per character (increase to slow down)
+      const pauseOnSpace = 600;   // 1 second pause after each space
+
+      let idx = 0;
+      function type() {
+        if (idx < fullText.length) {
+          el.textContent += fullText[idx];
+          const delay = fullText[idx] === ' ' ? pauseOnSpace : typingSpeed;
+          idx++;
+          setTimeout(type, delay);
+        }
+      }
+      type();
+    });
   </script>
 </body>
 </html>
